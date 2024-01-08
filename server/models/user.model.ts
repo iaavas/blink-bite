@@ -1,6 +1,3 @@
-import { Article } from "./product.model";
-import { Comment } from "./comment.model";
-
 export interface User {
   id: number;
   username: string;

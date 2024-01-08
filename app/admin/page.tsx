@@ -3,13 +3,20 @@ import Sidebar from "../components/admin/Sidebar";
 import AdminDetails from "../components/admin/AdminDetails";
 import { useAuth } from "../context/AuthContext";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 // context
 
 function Page() {
   const { role } = useAuth();
   const router = useRouter();
-  if (role != "ADMIN") router.push("/login");
+
+  useEffect(
+    function () {
+      if (role != "ADMIN") router.push("/login");
+    },
+    [role, router]
+  );
   return (
     <main className="flex  ">
       <Sidebar />
