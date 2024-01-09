@@ -1,16 +1,24 @@
 "use client";
 import Link from "next/link";
-import React from "react";
-import { MdOutlineShoppingCart } from "react-icons/md";
+import React, { useState } from "react";
+import {
+  MdOutlineShoppingCart,
+  MdOutlinePerson,
+  MdOutlineMenu,
+} from "react-icons/md";
 import Logo from "./Logo";
 import { useAuth } from "@/app/context/AuthContext";
 import Button from "./Button";
+import { FaHome, FaTshirt } from "react-icons/fa";
+import { usePathname } from "next/navigation";
 
 function Nav() {
   const { token, logout } = useAuth();
+  const pathname = usePathname();
+
   return (
-    <nav className="bg-white ">
-      <div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
+    <nav className="bg-white md:pt-4">
+      <div className="max-w-screen-xl md:flex items-center justify-between mx-auto p-4">
         <div className="flex items-center">
           <input
             type="text"
@@ -19,29 +27,87 @@ function Nav() {
         </div>
 
         <Logo />
-
+        {/* Desktop navigation */}
         <div className="hidden md:flex items-center gap-4 font-urban uppercase font-semibold">
           {!token && <Link href="/register">Register</Link>}
           {!token ? (
             <Link href="/login">Sign In</Link>
           ) : (
-            <Button handleClick={logout} type={"primary"}>
-              LogOut
-            </Button>
+            <button
+              onClick={logout}
+              className="border-2 font-urban uppercase p-2 border-black mr-6"
+            >
+              Logout
+            </button>
           )}
           <Link href="/cart">
-            <MdOutlineShoppingCart size={20} />
+            <MdOutlineShoppingCart size={30} />
           </Link>
         </div>
+      </div>
 
-        <div className="md:hidden flex items-center ">
-          <button
-            type="button"
-            className="text-2xl text-gray-600 focus:outline-none "
-            onClick={() => alert("Toggle your mobile menu here")}
-          >
-            ☰
-          </button>
+      {/* Mobile Menu */}
+
+      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white p-4 border-t border-gray-300 z-50">
+        <div className="flex justify-around">
+          <Link href="/">
+            <div
+              className={`flex flex-col items-center ${
+                pathname === "/" ? "text-red-800" : ""
+              } `}
+            >
+              <FaHome size={24} />
+              <span className="text-xs">Home</span>
+            </div>
+          </Link>
+          <Link href="/products">
+            <div
+              className={`flex flex-col items-center ${
+                pathname === "/products" ? "text-red-800" : ""
+              } `}
+            >
+              <FaTshirt size={24} />
+              <span className="text-xs">Shop</span>
+            </div>
+          </Link>
+
+          <Link href="/cart">
+            <div
+              className={`flex flex-col items-center ${
+                pathname === "/cart" ? "text-red-800" : ""
+              } `}
+            >
+              <MdOutlineShoppingCart size={24} />
+              <span className="text-xs">Cart</span>
+            </div>
+          </Link>
+
+          {!token && (
+            <Link href="/register">
+              <div className="flex flex-col items-center">
+                <MdOutlinePerson size={24} />
+                <span className="text-xs">Register</span>
+              </div>
+            </Link>
+          )}
+          {!token ? (
+            <Link href="/login">
+              <div className="flex flex-col items-center">
+                <MdOutlinePerson size={24} />
+                <span className="text-xs">Sign In</span>
+              </div>
+            </Link>
+          ) : (
+            <button
+              onClick={() => {
+                logout();
+              }}
+              className="flex flex-col items-center"
+            >
+              <MdOutlinePerson size={24} />
+              <span className="text-xs">Logout</span>
+            </button>
+          )}
         </div>
       </div>
     </nav>

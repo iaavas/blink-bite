@@ -65,7 +65,7 @@ export const createUser = async (
       username,
       email,
       password: hashedPassword,
-      role: input.role ?? "user",
+      role: input.role ?? "USER",
     },
     select: {
       email: true,

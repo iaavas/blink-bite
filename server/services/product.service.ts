@@ -59,6 +59,13 @@ export const getCurrentProduct = async (productId: string) => {
     },
     select: {
       id: true,
+      name: true,
+      description: true,
+      image: true,
+      price: true,
+      color: true,
+      brand: true,
+      size: true,
     },
   });
 
@@ -104,6 +111,8 @@ export const getAllProducts = async () => {
       name: true,
       description: true,
       price: true,
+      image: true,
+      id: true,
     },
   });
 

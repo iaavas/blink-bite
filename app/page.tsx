@@ -12,7 +12,7 @@ export default function Home() {
       <Nav />
       <HeroContent />
       <CategoryCarousel />
-      <ProductCarousel />
+      <ProductCarousel limit={3} />
       <Newsletter />
       <Footer />
     </main>

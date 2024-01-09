@@ -1,23 +1,36 @@
-"use client";
-import Image from "next/image";
-import Link from "next/link";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { FaSearch } from "react-icons/fa";
-import { FaShoppingCart } from "react-icons/fa";
+"use strict";
 
-function ProductCard() {
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { FaSearch, FaShoppingCart } from "react-icons/fa";
+
+interface ProductCardProps {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+}
+
+function ProductCard({
+  id,
+  name,
+  description,
+  price,
+  image,
+}: ProductCardProps) {
   const router = useRouter();
   const [isHovered, setIsHovered] = useState(false);
 
   const handleSearchBarClick = () => {
     // Navigate to the /product/1 route
-    router.push("/product/1");
+    router.push(`/products/${id}`);
   };
 
   return (
     <div
-      className={`my-2 text-center relative ease-in`}
+      className={`my-2 text-center relative ease-in mx-4`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -26,21 +39,25 @@ function ProductCard() {
           isHovered ? "opacity-40" : ""
         }`}
       >
-        <div className="bg-white rounded-full p-2 cursor-pointer text-stone-900 opacity-100 z-99">
+        <button
+          className="bg-white rounded-full p-2 cursor-pointer text-stone-900 opacity-100 z-99"
+          onClick={handleSearchBarClick}
+        >
           <FaSearch size={20} />
-        </div>
+        </button>
         <div className="bg-white rounded-full p-2 cursor-pointer text-stone-900 opacity-100 z-99">
           <FaShoppingCart size={20} />
         </div>
       </div>
 
       <Image
-        src={"/product1.png"}
+        src={image}
         alt={"product"}
         className={`object-cover p-2`}
         width={300}
         height={300}
       />
+      <div className="p-4 underline">{name}</div>
     </div>
   );
 }

@@ -25,7 +25,7 @@ router.post(
 
 router.get(
   "/product/:productId",
-  auth.required,
+
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const product = await getCurrentProduct(req.params.productId as string);
@@ -50,7 +50,7 @@ router.get(
 
 router.delete(
   "/product/:productId",
-  auth.required,
+  isAdmin,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const product = await deleteProduct(req.params.productId as string);

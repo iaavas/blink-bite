@@ -6,7 +6,7 @@ import Button from "../ui/Button";
 function HeroContent() {
   return (
     <div className="bg-blue-50 flex justify-center px-2 pt-2">
-      <div className="flex flex-col sm:flex-row gap-20  ">
+      <div className="flex flex-col-reverse sm:flex-row gap-20  ">
         <Image
           src="/model.png"
           alt="A Female Model"
@@ -15,7 +15,7 @@ function HeroContent() {
           className="mt-2"
           priority={true}
         />
-        <div className="flex flex-col gap-4 justify-center sm:ml-10 ml-4 mt-4">
+        <div className="flex flex-col gap-4 justify-center sm:ml-10 ml-4 mt-4 p-4 sm:p-0">
           <h1 className="font-urban uppercase text-6xl font-semibold ">
             summer sale
           </h1>

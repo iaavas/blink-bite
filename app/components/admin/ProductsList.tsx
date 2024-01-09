@@ -9,6 +9,7 @@ const ProductList: React.FC<ProductListProps> = () => {
       name: string;
       description: string;
       price: number;
+      id: string;
     }>
   >([]);
 

@@ -1,31 +1,25 @@
 "use client";
 import Footer from "@/app/components/ui/Footer";
 import Nav from "@/app/components/ui/Nav";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { URL } from "@/constants/constant";
 import { toast } from "react-toastify";
 import { useAuth } from "@/app/context/AuthContext";
 import Loading from "@/app/components/ui/Loading";
 import { useRouter } from "next/navigation";
 import { handleErrors } from "@/lib/utils";
+import useRedirectOnRole from "@/app/hooks/useRedirectOnRole";
 
 function Page() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const { login, addRole, token, role } = useAuth();
-  const router = useRouter();
+  const { login, addRole } = useAuth();
+  console.log("object");
+  console.log(process.env.NODE_ENV);
 
-  useEffect(() => {
-    if (token && role === "ADMIN") {
-      router.push("/admin");
-    }
-
-    if (token && role === "USER") {
-      router.push("/");
-    }
-  }, [token, role, router]);
+  useRedirectOnRole();
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     try {
