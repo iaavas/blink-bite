@@ -2,14 +2,19 @@
 import Button from "@/app/components/ui/Button";
 import Footer from "@/app/components/ui/Footer";
 import Nav from "@/app/components/ui/Nav";
+import { useCart } from "@/app/context/CartContext";
 import { URL } from "@/constants/constant";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 function ProductPage() {
   const router = useRouter();
   const { productId } = useParams();
+  const { dispatch } = useCart();
+
+  const [cartButtonDisplay, setCartButtonDisplay] = useState(true);
 
   const [product, setProduct] = useState<{
     name: string;
@@ -46,25 +51,31 @@ function ProductPage() {
     fetchProducts();
   }, [productId, router]);
 
+  function handleCartClick() {
+    dispatch({
+      type: "ADD_ITEM",
+      payload: { ...product, id: productId as string },
+    });
+    setCartButtonDisplay(false);
+    toast.success("Added to Cart");
+  }
+
   return (
     <>
       <Nav />
       <div className="container mx-auto mt-8 p-4">
         <div className="flex flex-wrap justify-center items-center gap-8">
-          <div className="">
+          <div>
             <Image
               src={product.image}
               alt={product.name}
-              width={300}
-              height={300}
-              quality={80}
-              priority={true}
-              className="border-2 border-black p-8"
+              width={400}
+              height={400}
             />
           </div>
 
           <div className="w-full md:w-1/2 lg:w-1/3 mt-4 md:mt-0 md:pl-4 ml-8 gap-4">
-            <h1 className="text-6xl font-bold mb-2 font-urban">
+            <h1 className="text-6xl font-bold mb-2 font-urban tracking-wider">
               {product.name}
             </h1>
             <h3 className="text-gray-700 mb-4 text-2xl">
@@ -94,7 +105,11 @@ function ProductPage() {
               Rs. {product.price}
             </p>
 
-            <Button type={"fourth"}>Add to Cart</Button>
+            {cartButtonDisplay && (
+              <Button type={"fourth"} handleClick={handleCartClick}>
+                Add to Cart
+              </Button>
+            )}
           </div>
         </div>
       </div>

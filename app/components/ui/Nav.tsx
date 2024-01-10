@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import {
   MdOutlineShoppingCart,
   MdOutlinePerson,
@@ -11,9 +11,12 @@ import { useAuth } from "@/app/context/AuthContext";
 import Button from "./Button";
 import { FaHome, FaTshirt } from "react-icons/fa";
 import { usePathname } from "next/navigation";
+import { useCart } from "@/app/context/CartContext";
 
 function Nav() {
   const { token, logout } = useAuth();
+  const { state } = useCart();
+  const cartLength = state.items.length;
   const pathname = usePathname();
 
   return (
@@ -41,13 +44,19 @@ function Nav() {
             </button>
           )}
           <Link href="/cart">
-            <MdOutlineShoppingCart size={30} />
+            <div className="relative">
+              <MdOutlineShoppingCart size={30} />
+              {cartLength > 0 && (
+                <div className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center p-1 text-sm">
+                  {cartLength}
+                </div>
+              )}
+            </div>
           </Link>
         </div>
       </div>
 
       {/* Mobile Menu */}
-
       <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white p-4 border-t border-gray-300 z-50">
         <div className="flex justify-around">
           <Link href="/">
@@ -72,13 +81,13 @@ function Nav() {
           </Link>
 
           <Link href="/cart">
-            <div
-              className={`flex flex-col items-center ${
-                pathname === "/cart" ? "text-red-800" : ""
-              } `}
-            >
+            <div className="relative">
               <MdOutlineShoppingCart size={24} />
-              <span className="text-xs">Cart</span>
+              {cartLength > 0 && (
+                <div className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center">
+                  {cartLength}
+                </div>
+              )}
             </div>
           </Link>
 

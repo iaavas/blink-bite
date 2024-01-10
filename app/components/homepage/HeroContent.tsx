@@ -13,7 +13,6 @@ function HeroContent() {
           width={300}
           height={300}
           className="mt-2"
-          priority={true}
         />
         <div className="flex flex-col gap-4 justify-center sm:ml-10 ml-4 mt-4 p-4 sm:p-0">
           <h1 className="font-urban uppercase text-6xl font-semibold ">

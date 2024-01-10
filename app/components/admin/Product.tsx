@@ -1,7 +1,8 @@
 import { useAuth } from "@/app/context/AuthContext";
 import { URL } from "@/constants/constant";
-import React from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
+import Loading from "../ui/Loading";
 
 interface ProductProps {
   product: {
@@ -14,7 +15,9 @@ interface ProductProps {
 
 const Product: React.FC<ProductProps> = ({ product }) => {
   const { token } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
   async function handleDelete() {
+    setIsLoading(true);
     const res = await fetch(`${URL}product/${product.id}`, {
       method: "DELETE",
       headers: {
@@ -25,6 +28,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
 
     if (res.ok) {
       toast.error("Product Deleted!!!");
+      setIsLoading(false);
     }
   }
 
@@ -38,12 +42,16 @@ const Product: React.FC<ProductProps> = ({ product }) => {
           <button className="bg-blue-400 text-white px-4 py-2 mr-2 rounded-lg">
             Modify
           </button>
-          <button
-            className="bg-red-400 text-white px-4 py-2 rounded-lg"
-            onClick={handleDelete}
-          >
-            Delete
-          </button>
+          {!isLoading ? (
+            <button
+              className="bg-red-400 text-white px-4 py-2 rounded-lg"
+              onClick={handleDelete}
+            >
+              Delete
+            </button>
+          ) : (
+            <Loading />
+          )}
         </div>
       </td>
     </tr>

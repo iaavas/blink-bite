@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Product from "./Product";
 import { URL } from "@/constants/constant";
+import Button from "../ui/Button";
 interface ProductListProps {}
 
 const ProductList: React.FC<ProductListProps> = () => {
@@ -32,6 +33,7 @@ const ProductList: React.FC<ProductListProps> = () => {
       <p className="font-bold text-2xl mb-6">
         Total Products: {products.length}
       </p>
+
       <table className="w-full border-collapse rounded-md">
         <thead>
           <tr className="bg-gray-200">
