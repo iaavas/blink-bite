@@ -12,12 +12,14 @@ import Button from "./Button";
 import { FaHome, FaTshirt } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 import { useCart } from "@/app/context/CartContext";
+import MobileNav from "./MobileNav";
+import { useSearch } from "@/app/context/SearchContext";
 
 function Nav() {
-  const { token, logout } = useAuth();
+  const { token, logout, role } = useAuth();
   const { state } = useCart();
+  const { searchQuery, setSearchQuery } = useSearch();
   const cartLength = state.items.length;
-  const pathname = usePathname();
 
   return (
     <nav className="bg-white md:pt-4">
@@ -26,13 +28,19 @@ function Nav() {
           <input
             type="text"
             className="border border-gray-400 p-1 sm:block hidden"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
 
         <Logo />
-        {/* Desktop navigation */}
+
         <div className="hidden md:flex items-center gap-4 font-urban uppercase font-semibold">
+          <Link href="/products" className="">
+            Products
+          </Link>
           {!token && <Link href="/register">Register</Link>}
+          {role === "ADMIN" && <Link href="/register">Register</Link>}
           {!token ? (
             <Link href="/login">Sign In</Link>
           ) : (
@@ -56,69 +64,7 @@ function Nav() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white p-4 border-t border-gray-300 z-50">
-        <div className="flex justify-around">
-          <Link href="/">
-            <div
-              className={`flex flex-col items-center ${
-                pathname === "/" ? "text-red-800" : ""
-              } `}
-            >
-              <FaHome size={24} />
-              <span className="text-xs">Home</span>
-            </div>
-          </Link>
-          <Link href="/products">
-            <div
-              className={`flex flex-col items-center ${
-                pathname === "/products" ? "text-red-800" : ""
-              } `}
-            >
-              <FaTshirt size={24} />
-              <span className="text-xs">Shop</span>
-            </div>
-          </Link>
-
-          <Link href="/cart">
-            <div className="relative">
-              <MdOutlineShoppingCart size={24} />
-              {cartLength > 0 && (
-                <div className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center">
-                  {cartLength}
-                </div>
-              )}
-            </div>
-          </Link>
-
-          {!token && (
-            <Link href="/register">
-              <div className="flex flex-col items-center">
-                <MdOutlinePerson size={24} />
-                <span className="text-xs">Register</span>
-              </div>
-            </Link>
-          )}
-          {!token ? (
-            <Link href="/login">
-              <div className="flex flex-col items-center">
-                <MdOutlinePerson size={24} />
-                <span className="text-xs">Sign In</span>
-              </div>
-            </Link>
-          ) : (
-            <button
-              onClick={() => {
-                logout();
-              }}
-              className="flex flex-col items-center"
-            >
-              <MdOutlinePerson size={24} />
-              <span className="text-xs">Logout</span>
-            </button>
-          )}
-        </div>
-      </div>
+      <MobileNav />
     </nav>
   );
 }

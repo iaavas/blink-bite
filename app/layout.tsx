@@ -6,6 +6,7 @@ const inter = Inter({ subsets: ["latin"] });
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CartProvider } from "./context/CartContext";
+import { SearchProvider } from "./context/SearchContext";
 
 export const metadata: Metadata = {
   title: "Vástrá",
@@ -21,9 +22,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ToastContainer />
-        <AuthProvider>
-          <CartProvider>{children}</CartProvider>
-        </AuthProvider>
+        <SearchProvider>
+          <AuthProvider>
+            <CartProvider>{children}</CartProvider>
+          </AuthProvider>
+        </SearchProvider>
       </body>
     </html>
   );

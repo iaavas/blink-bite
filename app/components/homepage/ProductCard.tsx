@@ -1,9 +1,13 @@
 "use strict";
 
+import { useCart } from "@/app/context/CartContext";
 import Image from "next/image";
+import { TbCurrencyRupeeNepalese } from "react-icons/tb";
+
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaSearch, FaShoppingCart } from "react-icons/fa";
+import { Loader } from "lucide-react";
 
 interface ProductCardProps {
   id: string;
@@ -24,40 +28,42 @@ function ProductCard({
   const [isHovered, setIsHovered] = useState(false);
 
   const handleSearchBarClick = () => {
-    // Navigate to the /product/1 route
     router.push(`/products/${id}`);
   };
 
+  const { state } = useCart();
+  const isInCart = state.items.some((item) => item.id === id);
+
   return (
     <div
-      className={`my-2 text-center relative ease-in mx-4`}
+      className={`my-2  text-center relative ease-in 	 mx-4 cursor-pointer transition-transform transform   ${
+        isHovered ? "scale-105 " : ""
+      }`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={handleSearchBarClick}
     >
-      <div
-        className={`absolute top-0 left-0 w-full h-full opacity-0 bg-black flex items-center justify-center transition-opacity duration-300 ease-in-out p-4 gap-8 ${
-          isHovered ? "opacity-40" : ""
-        }`}
-      >
-        <button
-          className="bg-white rounded-full p-2 cursor-pointer text-stone-900 opacity-100 z-99"
-          onClick={handleSearchBarClick}
-        >
-          <FaSearch size={20} />
-        </button>
-        <div className="bg-white rounded-full p-2 cursor-pointer text-stone-900 opacity-100 z-99">
-          <FaShoppingCart size={20} />
-        </div>
-      </div>
-
       <Image
         src={image}
         alt={"product"}
-        className={`object-cover p-2`}
-        width={300}
-        height={300}
+        width={250}
+        height={250}
+        quality={80}
+        onLoad={(event) => <Loader />}
+        // placeholder="blur"
+        className={` p-2 ${isInCart && "grayscale"} `}
       />
-      <div className="p-4 underline">{name}</div>
+      <div className="p-2 text-2xl text-center">{name}</div>
+      {!isInCart ? (
+        <div className="flex items-center justify-center gap-2 text-blue-900 ">
+          <TbCurrencyRupeeNepalese size={30} />
+          <span className="p-0 text-3xl font-bold  font-urban tracking-wider">
+            {price}
+          </span>
+        </div>
+      ) : (
+        <span className="p-0 text-xl uppercase font-bold">already in cart</span>
+      )}
     </div>
   );
 }

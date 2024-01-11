@@ -3,7 +3,7 @@ import { IoMdSend } from "react-icons/io";
 
 function Newsletter() {
   return (
-    <div className="flex bg-red-50 justify-center items-center flex-col gap-6 p-20">
+    <div className="flex bg-pink-50 justify-center items-center flex-col gap-6 p-20">
       <h1 className="font-urban sm:text-6xl text-4xl font-semibold tracking-wide">
         Newsletter
       </h1>

@@ -7,14 +7,13 @@ import { URL } from "@/constants/constant";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { TbCurrencyRupeeNepalese } from "react-icons/tb";
 import { toast } from "react-toastify";
 
 function ProductPage() {
   const router = useRouter();
   const { productId } = useParams();
   const { dispatch } = useCart();
-
-  const [cartButtonDisplay, setCartButtonDisplay] = useState(true);
 
   const [product, setProduct] = useState<{
     name: string;
@@ -51,19 +50,25 @@ function ProductPage() {
     fetchProducts();
   }, [productId, router]);
 
+  const { state } = useCart();
+
+  const isInCart = state.items.some((item) => item.id === productId);
+
   function handleCartClick() {
     dispatch({
       type: "ADD_ITEM",
       payload: { ...product, id: productId as string },
     });
-    setCartButtonDisplay(false);
-    toast.success("Added to Cart");
+    toast.success("Added to Cart", { position: "bottom-center" });
   }
 
   return (
     <>
       <Nav />
       <div className="container mx-auto mt-8 p-4">
+        <Button type={"primary"} handleClick={() => router.back()} css="w-1/3">
+          Back
+        </Button>
         <div className="flex flex-wrap justify-center items-center gap-8">
           <div>
             <Image
@@ -71,6 +76,7 @@ function ProductPage() {
               alt={product.name}
               width={400}
               height={400}
+              className={`${isInCart && "grayscale"}`}
             />
           </div>
 
@@ -101,15 +107,24 @@ function ProductPage() {
               <span className="text-stone-700">{product.size}</span>
             </p>
 
-            <p className="text-2xl font-bold text-green-700 mb-4">
-              Rs. {product.price}
-            </p>
+            <div className="flex gap-2 mb-8 items-center text-green-900 ">
+              <TbCurrencyRupeeNepalese size={30} />
+              <span className="p-0 text-3xl font-bold  font-urban tracking-wider">
+                {product.price}
+              </span>
+            </div>
 
-            {cartButtonDisplay && (
-              <Button type={"fourth"} handleClick={handleCartClick}>
-                Add to Cart
-              </Button>
-            )}
+            <div className="flex flex-col gap-4">
+              {!isInCart && (
+                <Button
+                  type={"fourth"}
+                  handleClick={handleCartClick}
+                  css="w-1/3"
+                >
+                  Add to Cart
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       </div>
