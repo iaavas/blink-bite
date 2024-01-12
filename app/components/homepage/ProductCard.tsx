@@ -50,8 +50,9 @@ function ProductCard({
         height={250}
         quality={80}
         onLoad={(event) => <Loader />}
-        // placeholder="blur"
-        className={` p-2 ${isInCart && "grayscale"} `}
+        className={` p-2 ${
+          isInCart && "grayscale"
+        } w-[300px] h-[300px] object-fill border-2 border-stone-100`}
       />
       <div className="p-2 text-2xl text-center">{name}</div>
       {!isInCart ? (

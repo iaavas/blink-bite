@@ -37,13 +37,13 @@ function MobileNav() {
 
         <Link href="/cart">
           <div className="relative">
-            <MdOutlineShoppingCart size={24} />
+            <MdOutlineShoppingCart size={23} />
+            <span className="text-xs">Cart</span>
             {cartLength > 0 && (
               <div className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center">
                 {cartLength}
               </div>
             )}
-            <span className="text-xs">Cart</span>
           </div>
         </Link>
 

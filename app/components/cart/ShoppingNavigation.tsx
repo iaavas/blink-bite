@@ -3,12 +3,14 @@ import Link from "next/link";
 import React from "react";
 import Button from "../ui/Button";
 import { useCart } from "@/app/context/CartContext";
+import { toast } from "react-toastify";
 
 function ShoppingNavigation() {
   const { state, dispatch } = useCart();
   const noOfItems = state.items.length;
   function handleClearCart() {
     dispatch({ type: "CLEAR_CART" });
+    toast.error("Cart Cleared", { position: "bottom-center" });
   }
   return (
     <div className="flex justify-evenly items-center gap-8">
