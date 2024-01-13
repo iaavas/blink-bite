@@ -87,7 +87,7 @@ function ProductPage() {
           </div>
 
           <div className="w-full md:w-1/2 lg:w-1/3 mt-4 md:mt-0 md:pl-4 ml-8 gap-4">
-            <h1 className="text-6xl font-bold mb-2 font-urban tracking-wider">
+            <h1 className="text-6xl font-bold mb-2 font-urban tracking-wider text-blue-950">
               {product.name}
             </h1>
             <h3 className="text-gray-700 mb-4 text-2xl">
