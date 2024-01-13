@@ -7,7 +7,7 @@ import { useFilter } from "@/app/context/FilterContext";
 import Loading from "../ui/Loading";
 
 function ProductCarousel({ limit = null }: { limit?: number | null }) {
-  const { searchQuery, clicked, setClicked, sortBy } = useFilter();
+  const { searchQuery, clicked, setClicked, sortBy, color } = useFilter();
   const [isLoading, setIsLoading] = useState(true);
 
   const [products, setProducts] = useState<
@@ -17,6 +17,7 @@ function ProductCarousel({ limit = null }: { limit?: number | null }) {
       description: string;
       price: number;
       image: string;
+      color: string;
     }>
   >([]);
 
@@ -29,6 +30,7 @@ function ProductCarousel({ limit = null }: { limit?: number | null }) {
         setIsLoading(false);
         setProducts(data.products);
       } catch (error) {
+        setIsLoading(false);
         console.error("Error fetching products:", error);
       }
     };
@@ -54,6 +56,12 @@ function ProductCarousel({ limit = null }: { limit?: number | null }) {
         : limitedProducts.sort((a, b) => b.price - a.price);
   }
 
+  if (color && color !== "All Colors") {
+    limitedProducts = limitedProducts.filter(
+      (item) => item.color.toLowerCase() === color.toLowerCase()
+    );
+  }
+
   if (isLoading) {
     return (
       <div className="h-screen flex justify-center items-center ">
@@ -65,7 +73,7 @@ function ProductCarousel({ limit = null }: { limit?: number | null }) {
   return (
     <div>
       {clicked && limitedProducts.length > 0 && (
-        <span className="uppercase font-bold font-urban tracking-wider text-3xl text-center p-2 ml-8">
+        <span className="uppercase font-bold font-urban tracking-wider text-3xl text-center p-2 sm:ml-8 ml-4">
           showing for: {searchQuery}
         </span>
       )}
@@ -84,7 +92,7 @@ function ProductCarousel({ limit = null }: { limit?: number | null }) {
           ))}
         </div>
       ) : (
-        <span className="uppercase font-bold font-urban tracking-wider text-3xl text-center p-8 ml-8 flex items-center justify-center">
+        <span className="uppercase font-bold font-urban tracking-wider ml-0 sm:ml-8 text-3xl text-center p-8  flex items-center justify-center">
           OOPS LOOKS LIKE WE DON&apos;T HAVE THAT PRODUCT YET
         </span>
       )}

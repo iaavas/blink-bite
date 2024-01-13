@@ -66,9 +66,15 @@ function ProductPage() {
     <>
       <Nav />
       <div className="container mx-auto mt-8 p-4">
-        <Button type={"primary"} handleClick={() => router.back()} css="w-1/3">
-          Back
-        </Button>
+        <div className="flex items-end justify-end mb-8">
+          <Button
+            type={"primary"}
+            handleClick={() => router.back()}
+            css="w-1/3"
+          >
+            Back
+          </Button>
+        </div>
         <div className="flex flex-wrap justify-center items-center gap-8">
           <div>
             <Image

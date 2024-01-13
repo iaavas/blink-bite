@@ -5,7 +5,7 @@ function Logo() {
   return (
     <Link
       href="/"
-      className="ml-4 text-3xl  font-urban tracking-wider	font-bold text-center flex items-center justify-center"
+      className="text-3xl  font-urban tracking-wider	font-bold  text-center sm:ml-48 flex justify-center items-center"
     >
       Vástrá
     </Link>

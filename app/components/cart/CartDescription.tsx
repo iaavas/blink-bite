@@ -17,7 +17,7 @@ interface CartDescriptionProps {
 }
 
 function CartDescription({ item }: CartDescriptionProps) {
-  const { name, brand, size, color, id, image } = item;
+  const { name, brand, size, color, id, image, price } = item;
 
   return (
     <div className="flex justify-between items-center font-urban sm:flex-row flex-col">
@@ -27,10 +27,7 @@ function CartDescription({ item }: CartDescriptionProps) {
           <span className="font-bold text-2xl">Product </span>
           <span className="text-lg text-stone-500">{name}</span>
         </div>
-        <div className="flex items-center justify-between gap-4">
-          <span className="font-bold text-2xl">ID</span>
-          <span className="text-lg text-stone-500">{id}</span>
-        </div>
+
         <div className="flex items-center justify-between gap-4 ">
           <span className="font-bold text-2xl">Size</span>
           <span className="text-lg text-stone-500">{size}</span>
@@ -43,6 +40,10 @@ function CartDescription({ item }: CartDescriptionProps) {
         <div className="flex items-center justify-between gap-4 ">
           <span className="font-bold text-2xl">Color</span>
           <span className="text-lg text-stone-500">{color}</span>
+        </div>
+        <div className="flex items-center justify-between gap-4">
+          <span className="font-bold text-2xl">Price</span>
+          <span className="text-lg text-stone-500">{price}</span>
         </div>
       </div>
     </div>

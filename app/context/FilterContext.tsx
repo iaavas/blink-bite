@@ -7,7 +7,9 @@ interface FilterContextType {
   clicked: boolean;
   setClicked: (bool: boolean) => void;
   sortBy: string;
+  color: string;
   setSortBy: (sort: string) => void;
+  setColor: (sort: string) => void;
 }
 
 const FilterContext = createContext<FilterContextType | undefined>(undefined);
@@ -20,6 +22,7 @@ export const FilterProvider: React.FC<FilterProviderProps> = ({ children }) => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [clicked, setClicked] = useState(false);
   const [sortBy, setSortBy] = useState<string>("");
+  const [color, setColor] = useState<string>("");
 
   return (
     <FilterContext.Provider
@@ -30,6 +33,8 @@ export const FilterProvider: React.FC<FilterProviderProps> = ({ children }) => {
         setClicked,
         sortBy,
         setSortBy,
+        color,
+        setColor,
       }}
     >
       {children}

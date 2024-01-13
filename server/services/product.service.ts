@@ -113,6 +113,7 @@ export const getAllProducts = async () => {
       price: true,
       image: true,
       id: true,
+      color: true,
     },
   });
 
