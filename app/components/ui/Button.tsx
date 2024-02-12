@@ -15,7 +15,7 @@ function Button({ handleClick, type, css = "", to, children }: ButtonProps) {
   const styles = {
     primary:
       base +
-      "border-2 border-black p-2 max-w-1 my-6 uppercase max-w-sm text-center" +
+      " p-2 max-w-1 my-6 uppercase max-w-sm text-center  rounded-md text-green-600" +
       css,
     secondary: base + "" + css,
     third:

@@ -66,7 +66,7 @@ function ProductFilters() {
   ));
 
   return (
-    <div className="flex flex-col sm:flex-row items-center justify-between mx-10 my-4 gap-8 sm:gap-2 sm:order-2 order-1">
+    <div className="flex flex-col sm:flex-row items-center justify-between mx-10 my-4 gap-8 sm:gap-2 sm:order-2 order-1 ">
       <div>
         <select
           className="border border-gray-400 bg-white rounded-full p-2"
@@ -76,23 +76,6 @@ function ProductFilters() {
           <option value="asc">Sort by Price (Asc)</option>
           <option value="desc">Sort by Price (Desc)</option>
         </select>
-      </div>
-
-      <div className="flex items-center justify-center sm:justify-between gap-4">
-        <input
-          type="text"
-          className={`border border-gray-400 items-center rounded-lg p-2 `}
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search Here"
-        />
-
-        <button
-          className="bg-stone-800 text-white p-2 rounded-full"
-          onClick={handleSearchClick}
-        >
-          <IoIosSearch size={25} />
-        </button>
       </div>
 
       <div>

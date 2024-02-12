@@ -17,7 +17,7 @@ function MobileNav() {
         <Link href="/">
           <div
             className={`flex flex-col items-center ${
-              pathname === "/" ? "text-red-800" : ""
+              pathname === "/" ? "text-green-800" : ""
             } `}
           >
             <FaHome size={24} />
@@ -27,7 +27,7 @@ function MobileNav() {
         <Link href="/products">
           <div
             className={`flex flex-col items-center ${
-              pathname === "/products" ? "text-red-800" : ""
+              pathname === "/products" ? "text-green-800" : ""
             } `}
           >
             <FaTshirt size={24} />

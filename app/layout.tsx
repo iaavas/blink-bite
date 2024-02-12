@@ -7,10 +7,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CartProvider } from "./context/CartContext";
 import { FilterProvider } from "./context/FilterContext";
+import { SearchProvider } from "./context/ProductsContext";
 
 export const metadata: Metadata = {
-  title: "Vástrá",
-  description: "Branded Nepali Cloths - Now In The Digital Space",
+  title: "Groceries at your doorstep | Blinkbite",
+  description: "Your Groceries at your home in 30 minutes",
 };
 
 export default function RootLayout({
@@ -23,9 +24,11 @@ export default function RootLayout({
       <body className={inter.className}>
         <ToastContainer />
         <FilterProvider>
-          <AuthProvider>
-            <CartProvider>{children}</CartProvider>
-          </AuthProvider>
+          <SearchProvider>
+            <AuthProvider>
+              <CartProvider>{children}</CartProvider>
+            </AuthProvider>
+          </SearchProvider>
         </FilterProvider>
       </body>
     </html>

@@ -6,11 +6,12 @@ export const addProduct = async (input: Product): Promise<Product> => {
   const name = input.name?.trim();
   const description = input.description?.trim();
   const price = input.price;
+  const quantity = input.quantity;
+  const discount = input.discount;
   const image = input.image?.trim();
-  const color = input.color.trim();
-  const size = input.size.trim();
-  const brand = input.brand.trim();
-  const quantity = input?.quantity;
+  const unit = input.unit.trim();
+  const category = input?.category.trim();
+  const keyFeatures = input?.keyFeatures;
 
   if (!name) {
     throw new HttpException(422, { errors: { name: ["can't be blank"] } });
@@ -29,7 +30,7 @@ export const addProduct = async (input: Product): Promise<Product> => {
     throw new HttpException(422, { errors: { image: ["can't be blank"] } });
   }
 
-  if (!size || !brand || !color) {
+  if (!unit || !keyFeatures) {
     throw new HttpException(422, {
       errors: { "size or brand or color": ["can't be blank"] },
     });
@@ -38,12 +39,13 @@ export const addProduct = async (input: Product): Promise<Product> => {
   const product = await prisma.Product.create({
     data: {
       name,
-      description,
+      category,
       price,
       image,
-      color,
-      brand,
-      size,
+      discount,
+      description,
+      unit,
+      keyFeatures,
       quantity,
     },
   });
@@ -60,12 +62,16 @@ export const getCurrentProduct = async (productId: string) => {
     select: {
       id: true,
       name: true,
-      description: true,
-      image: true,
+      category: true,
       price: true,
-      color: true,
-      brand: true,
-      size: true,
+      image: true,
+      keyFeatures: true,
+      description: true,
+
+      discount: true,
+      quantity: true,
+
+      unit: true,
     },
   });
 
@@ -109,11 +115,14 @@ export const getAllProducts = async () => {
     },
     select: {
       name: true,
-      description: true,
+      category: true,
       price: true,
       image: true,
       id: true,
-      color: true,
+      discount: true,
+      quantity: true,
+
+      unit: true,
     },
   });
 
@@ -122,6 +131,97 @@ export const getAllProducts = async () => {
   }
 
   return products;
+};
+export const getProductByCategories = async (query: string) => {
+  console.log(query);
+  const products = await prisma.product.findMany({
+    where: {
+      isDeleted: false,
+      category: query,
+    },
+    select: {
+      name: true,
+      category: true,
+      price: true,
+      image: true,
+      id: true,
+      discount: true,
+      quantity: true,
+
+      unit: true,
+    },
+  });
+
+  if (!products) {
+    throw new HttpException(404, {});
+  }
+
+  return products;
+};
+
+export const getAllCategories = async () => {
+  const categories = await prisma.product
+    .findMany({
+      where: {
+        isDeleted: false,
+      },
+      distinct: ["category"],
+      select: {
+        category: true,
+      },
+    })
+    .then((products: any) => products.map((product: any) => product.category));
+
+  if (!categories) {
+    throw new HttpException(404, {});
+  }
+
+  return categories;
+};
+
+export const searchProducts = async (query: string) => {
+  try {
+    const products = await prisma.product.findMany({
+      where: {
+        isDeleted: false,
+        OR: [
+          {
+            name: {
+              contains: query,
+              mode: "insensitive",
+            },
+          },
+          {
+            description: {
+              contains: query,
+              mode: "insensitive",
+            },
+          },
+        ],
+      },
+      select: {
+        name: true,
+        description: true,
+        price: true,
+        image: true,
+        id: true,
+        discount: true,
+        unit: true,
+      },
+      orderBy: {
+        name: "asc",
+      },
+    });
+
+    if (!products || products.length === 0) {
+      throw new Error("No products found matching the search query.");
+    }
+
+    return products;
+  } catch (error) {
+    console.error("Error in searching products:", error);
+    throw new Error("Failed to search for products.");
+  }
 };
 
 // export const login = async (userPayload: any) => {

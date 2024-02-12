@@ -2,24 +2,20 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Button from "../ui/Button";
+import { useRouter } from "next/navigation";
 
-function CategoryCard() {
+function CategoryCard({ name }: { name: string }) {
+  const router = useRouter();
   return (
-    <div className="my-2 text-center relative">
-      <p className="absolute top-60 left-0 right-0 text-white text-4xl  font-urban uppercase">
-        Winter Style!
+    <div
+      className="my-2 text-center relative border rounded-xl bg-slate-100 p-1 flex items-center justify-center cursor-pointer"
+      onClick={() => {
+        router.push(`/categories/${name}`);
+      }}
+    >
+      <p className="  text-black text-2xl tracking-wider  font-urban uppercase font-bold">
+        {name}
       </p>
-      <Image
-        src={"/category1.jpg"}
-        alt={"product"}
-        className="object-cover"
-        width={400}
-        height={400}
-      />
-
-      <Button to="/shop" type="third">
-        Shop Now
-      </Button>
     </div>
   );
 }

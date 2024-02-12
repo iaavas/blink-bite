@@ -5,6 +5,9 @@ import {
   getAllProducts,
   getCurrentProduct,
   deleteProduct,
+  searchProducts,
+  getAllCategories,
+  getProductByCategories,
 } from "../services/product.service";
 
 const router = Router();
@@ -30,6 +33,43 @@ router.get(
     try {
       const product = await getCurrentProduct(req.params.productId as string);
       res.json({ product });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+router.get(
+  "/categories",
+
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const categories = await getAllCategories();
+      res.json({ categories });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+router.get(
+  "/c/products",
+
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const categories = await getProductByCategories(req.query.cat as string);
+      res.json({ categories });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+router.get(
+  "/s",
+
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      console.log(req.query.q);
+      const products = await searchProducts(req.query.q as string);
+      res.json({ products });
     } catch (error) {
       next(error);
     }

@@ -53,6 +53,7 @@ module.exports = {
       },
       fontFamily: {
         urban: ["Urbanist", "sans-serif"],
+        roboto: ["Inter", "sans-serif"],
         eng: ["Engagement", "cursive"],
       },
       borderRadius: {

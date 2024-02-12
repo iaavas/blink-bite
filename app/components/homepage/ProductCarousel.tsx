@@ -1,101 +1,82 @@
-"use client";
 import React, { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
 import { URL } from "@/constants/constant";
-
 import { useFilter } from "@/app/context/FilterContext";
 import Loading from "../ui/Loading";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
-function ProductCarousel({ limit = null }: { limit?: number | null }) {
-  const { searchQuery, clicked, setClicked, sortBy, color } = useFilter();
+function ProductCarousel({ limit = null }) {
+  const { searchQuery, clicked, setClicked } = useFilter();
   const [isLoading, setIsLoading] = useState(true);
-
-  const [products, setProducts] = useState<
-    Array<{
-      id: string;
-      name: string;
-      description: string;
-      price: number;
-      image: string;
-      color: string;
-    }>
-  >([]);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await fetch(`${URL}product`);
         const data = await response.json();
-
-        setIsLoading(false);
+        console.log(data);
         setProducts(data.products);
       } catch (error) {
-        setIsLoading(false);
         console.error("Error fetching products:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchProducts();
   }, []);
+
   useEffect(() => {
     setClicked(false);
   }, [searchQuery, setClicked]);
 
-  let limitedProducts = limit !== null ? products.slice(0, limit) : products;
-
-  if (clicked && !limit) {
-    limitedProducts = limitedProducts.filter((item) =>
-      item.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  }
-
-  if (sortBy) {
-    limitedProducts =
-      sortBy === "asc"
-        ? limitedProducts.sort((a, b) => a.price - b.price)
-        : limitedProducts.sort((a, b) => b.price - a.price);
-  }
-
-  if (color && color !== "All Colors") {
-    limitedProducts = limitedProducts.filter(
-      (item) => item.color.toLowerCase() === color.toLowerCase()
-    );
-  }
-
   if (isLoading) {
     return (
-      <div className="h-screen flex justify-center items-center ">
+      <div className="h-screen flex justify-center items-center">
         <Loading size={40} />
       </div>
     );
   }
 
-  return (
-    <div>
-      {clicked && limitedProducts.length > 0 && (
-        <span className="uppercase font-bold font-urban tracking-wider text-3xl text-center p-2 sm:ml-8 ml-4">
-          showing for: {searchQuery}
-        </span>
-      )}
+  // Group products by category
+  const groupedProducts = {};
+  products.forEach((product) => {
+    // @ts-ignore
+    if (!groupedProducts[product.category]) {
+      // @ts-ignore
+      groupedProducts[product.category] = [];
+    }
+    // @ts-ignore
+    groupedProducts[product.category].push(product);
+  });
 
-      {limitedProducts.length > 0 ? (
-        <div className="flex flex-wrap  justify-around	 rounded-lg mx-1 gap-4 bg-white shadow-lg p-4 mb-8">
-          {limitedProducts.map((product, index) => (
-            <ProductCard
-              id={product.id}
-              name={product.name}
-              description={product.description}
-              price={product.price}
-              image={product.image}
-              key={index}
-            />
-          ))}
+  return (
+    <div className="container mx-auto px-4 py-8">
+      {Object.keys(groupedProducts).map((category) => (
+        <div key={category} className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4">{category}</h2>
+          <ScrollArea className="w-full  rounded-md ">
+            <div className="flex  gap-4 my-1 ">
+              {/* @ts-ignore */}
+              {groupedProducts[category].map((product) => (
+                <ProductCard
+                  id={product.id}
+                  name={product.name}
+                  description={product.description}
+                  price={product.price}
+                  image={product.image}
+                  unit={product.unit}
+                  quantity={product.quantity}
+                  key={product.id}
+                  discount={product.discount}
+                />
+              ))}
+            </div>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
         </div>
-      ) : (
-        <span className="uppercase font-bold font-urban tracking-wider ml-0 sm:ml-8 text-3xl text-center p-8  flex items-center justify-center">
-          OOPS LOOKS LIKE WE DON&apos;T HAVE THAT PRODUCT YET
-        </span>
-      )}
+      ))}
     </div>
   );
 }

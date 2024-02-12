@@ -1,15 +1,13 @@
 import React from "react";
-import HashLoader from "react-spinners/HashLoader";
+import MoonLoader from "react-spinners/MoonLoader";
 export default function Loading({ size = 30 }) {
   return (
-    <center>
-      <HashLoader
-        color={"#bfdbfe"}
-        loading={true}
-        size={size}
-        aria-label="Loading Spinner"
-        data-testid="loader"
-      />
-    </center>
+    <MoonLoader
+      color={"green"}
+      loading={true}
+      size={size}
+      aria-label="Loading Spinner"
+      data-testid="loader"
+    />
   );
 }

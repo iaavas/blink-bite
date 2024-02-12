@@ -28,10 +28,11 @@ model Product {
   name        String
   description String
   price       Float
+  discount       Float
   image       String
-  color       String
-  brand       String
-  size        String
+  category       String
+  unit        String
+  keyFeatures String[]
   quantity    Int     @default(1)
   isDeleted   Boolean @default(false)
 }

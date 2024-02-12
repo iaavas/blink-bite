@@ -10,12 +10,11 @@ import React, {
 interface CartItem {
   id: string;
   name: string;
-  description: string;
   price: number;
   image: string;
-  color: string;
-  brand: string;
-  size: string;
+  quantity: number;
+  unit: string;
+  discount: number;
 }
 
 interface CartState {
@@ -24,8 +23,9 @@ interface CartState {
 
 type CartAction =
   | { type: "ADD_ITEM"; payload: CartItem }
-  | { type: "REMOVE_ITEM"; payload: string }
-  | { type: "CLEAR_CART" };
+  | { type: "REMOVE_ITEM"; payload: { id: string } }
+  | { type: "CLEAR_CART" }
+  | { type: "UPDATE_QUANTITY"; payload: { id: string; quantity: number } };
 
 interface CartContextType {
   state: CartState;
@@ -44,8 +44,18 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
     case "REMOVE_ITEM":
       return {
         ...state,
-        items: state.items.filter((item) => item.id !== action.payload),
+        items: state.items.filter((item) => item.id !== action.payload.id),
       };
+    case "UPDATE_QUANTITY":
+      return {
+        ...state,
+        items: state.items.map((item) =>
+          item.id === action.payload.id
+            ? { ...item, quantity: action.payload.quantity }
+            : item
+        ),
+      };
+
     case "CLEAR_CART":
       return {
         ...state,

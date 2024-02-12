@@ -2,10 +2,10 @@ export interface Product {
   name: string;
   description: string;
   price: number;
-  image: string;
-  type: string;
   quantity: number;
-  color: string;
-  size: string;
-  brand: string;
+  image: string;
+  discount: number;
+  unit: string;
+  category: string;
+  keyFeatures: string;
 }
