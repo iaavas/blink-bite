@@ -17,7 +17,7 @@ const Search: React.FC = () => {
       if (query.trim() !== "") {
         router.push(`/s?q=${encodeURIComponent(query.trim())}`);
       }
-    }, 300);
+    }, 500);
 
     return () => clearTimeout(delayDebounceFn);
   }, [query, router]);

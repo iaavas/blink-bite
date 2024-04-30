@@ -10,7 +10,7 @@ function CategoryCard({ name }: { name: string }) {
     <div
       className="my-2 text-center relative border rounded-xl bg-slate-100 p-1 flex items-center justify-center cursor-pointer"
       onClick={() => {
-        router.push(`/categories/${name}`);
+        router.push(`/categories?s=${name}`);
       }}
     >
       <p className="  text-black text-2xl tracking-wider  font-urban uppercase font-bold">

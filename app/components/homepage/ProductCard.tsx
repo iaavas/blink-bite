@@ -91,17 +91,19 @@ function ProductCard({
 
   return (
     <div
-      className="border border-gray-300 rounded-lg shadow-lg bg-white p-4 relative w-52 h-96 cursor-pointer"
+      className="shadow-sm border-[0.5px] rounded-sm border-gray-200   bg-white p-4 relative w-60 h-64 aspect-square cursor-pointer z-20"
       onClick={handleClick}
     >
       <div className="relative">
         <Image
-          src={image}
+          src={`/${image}`}
           alt={"product"}
-          width={300}
-          height={300}
+          width={100}
+          height={100}
           quality={80}
-          className={`w-32 h-32 mx-auto ${isInCart && "grayscale"}`}
+          className={`aspect-square w-20 h-20 mx-auto ${
+            isInCart && "grayscale"
+          }`}
         />
         {discount > 0 && (
           <span className="absolute top-0 left-0 bg-red-700 text-white text-xs font-semibold px-2 py-1 rounded">
@@ -112,20 +114,22 @@ function ProductCard({
       <p className="text-gray-500 font-semibold text-md  p-2 text-center">
         {unit}
       </p>
-      <div className="p-4">
-        <p className="text-gray-800 font-semibold text-lg mb-8 ">{name}</p>
+      <div className="p-2">
+        <p className="text-gray-800 font-semibold text-sm mb-6 ">{name}</p>
 
-        <div className="absolute bottom-0 left-0 right-0 mx-auto flex items-center justify-between py-2 px-4 mt-4">
-          <div className="flex items-center">
+        <div className="absolute bottom-0 left-0 right-0 mx-auto flex items-center justify-between py-2 px-4 mt-8">
+          <div className="flex items-center mt-4">
             <TbCurrencyRupeeNepalese className="h-5 w-5 text-black" />
             <div>
-              <span className="font-semibold text-black ml-1">{price}</span>
+              <span className="font-semibold text-black ml-1 text-sm">
+                {price}
+              </span>
             </div>
           </div>
           <div>
             {!isInCart ? (
               <button
-                className="bg-green-700/10 text-green-700 border border-green-700 font-semibold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="bg-green-400/10 text-green-700 border border-green-700 font-semibold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-green-500 text-sm"
                 onClick={handleAddClick}
               >
                 ADD

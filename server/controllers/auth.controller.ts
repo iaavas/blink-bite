@@ -29,8 +29,6 @@ router.post(
   "/users/login",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      console.log("here");
-      console.log(req.body);
       const user = await login(req.body.user);
       res.json({ user });
     } catch (error) {

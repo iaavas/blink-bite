@@ -7,10 +7,10 @@ function Logo() {
   return (
     <Link
       href="/"
-      className="text-3xl  font-urban tracking-wider	font-bold  text-center italic lowercase  gap-4 items-center hidden sm:flex sm:flex-row-reverse "
+      className="text-xl   tracking-wider	font-semibold  text-center italic   gap-4 items-center hidden sm:flex sm:flex-row-reverse "
     >
       BlinkBite
-      <span className="text-green-700">
+      <span className="text-red-500">
         <FaTruckFast size={40} />
       </span>
     </Link>

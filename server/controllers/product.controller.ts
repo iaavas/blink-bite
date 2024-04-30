@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response, Router } from "express";
 import auth, { isAdmin } from "../utils/auth";
+import multer from "multer";
 import {
   addProduct,
   getAllProducts,
@@ -12,12 +13,31 @@ import {
 
 const router = Router();
 
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/"); // Uploads will be stored in the 'uploads/' directory
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname); // Unique filename
+  },
+});
+
+const upload = multer({ storage: storage });
+
 router.post(
   "/product",
+  upload.single("image"),
   isAdmin,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const product = await addProduct(req.body);
+      const productData = req.body;
+      console.log(req.body);
+      if (!req.file) return;
+      const imageUrl = req.file.path;
+
+      productData.image = imageUrl;
+
+      const product = await addProduct(productData);
 
       res.json({ product });
     } catch (error) {
@@ -67,7 +87,6 @@ router.get(
 
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      console.log(req.query.q);
       const products = await searchProducts(req.query.q as string);
       res.json({ products });
     } catch (error) {

@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import ProductList from "./ProductsList";
+import { Button } from "antd";
+import AddProduct from "../products/AddProduct";
 
 function AdminDetails() {
-  return <ProductList />;
+  return (
+    <div className="flex-grow overflow-y-auto max-h-screen">
+      <AddProduct />
+      <ProductList />
+    </div>
+  );
 }
 
 export default AdminDetails;

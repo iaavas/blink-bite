@@ -34,7 +34,7 @@ function CatProducts({ category }: { category: string }) {
     );
 
   return (
-    <div className="flex flex-wrap gap-8  justify-start p-1 ml-24">
+    <div className="flex flex-wrap gap-8  p-8  ">
       {categories.length > 0 &&
         categories.map((c: any) => (
           <ProductCard

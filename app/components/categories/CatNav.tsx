@@ -27,19 +27,19 @@ function CatNav({ nav }: { nav: string }) {
   }, []);
 
   return (
-    <div className="flex flex-col border-r">
+    <div className="flex flex-col border-r max-h-screen  ">
       <h4 className="mb-8 text-3xl  font-bold leading-none text-center mt-8 ">
         Categories
       </h4>
-      <ScrollArea className="h-[450px] w-[350px]  border-r ">
+      <ScrollArea className="h-[450px] w-[320px]   ">
         <div className="p-0 flex flex-col gap-2">
           {categories.map((ct) => (
             <React.Fragment key={ct}>
               <Link
                 className={`text-md p-4 ${
-                  nav === encodeURI(ct) && "bg-green-300/20 w-full "
+                  encodeURI(nav) === encodeURI(ct) && "bg-green-300/20 w-full "
                 }`}
-                href={`/categories/${ct}`}
+                href={`/categories?s=${ct}`}
               >
                 {ct}
               </Link>

@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "./context/AuthContext";
-const inter = Inter({ subsets: ["latin"] });
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CartProvider } from "./context/CartContext";
 import { FilterProvider } from "./context/FilterContext";
 import { SearchProvider } from "./context/ProductsContext";
+
+const inter = Montserrat({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Groceries at your doorstep | Blinkbite",
@@ -21,7 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className}`}>
         <ToastContainer />
         <FilterProvider>
           <SearchProvider>

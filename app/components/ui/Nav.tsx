@@ -39,7 +39,7 @@ function Nav() {
       <div className=" md:flex items-center justify-around   ">
         <Logo />
 
-        <span className="font-bold font-roboto text-lg text-left   px-4 capitalize w-full  mb-8 sm:mb-0 flex items-center ml-4">
+        <span className="font-bold  text-lg text-left   px-4 capitalize w-full  mb-8 sm:mb-0 flex items-center ml-4">
           Delivery in 30 Mins
         </span>
         <Search />

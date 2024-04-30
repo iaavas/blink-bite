@@ -6,7 +6,7 @@ import { CiShop } from "react-icons/ci";
 
 function Sidebar() {
   return (
-    <div className="bg-gray-800 h-auto text-white p-4  font-urban w-1/3">
+    <div className="bg-gray-800  text-white p-4  font-urban w-52 h-screen flex-none overflow-y-hidden max-h-screen">
       <h2 className="font-bold mb-4 text-sm md:text-lg">Vastra Admin</h2>
       <ul className="flex flex-col gap-4 items-center sm:items-start mt-4">
         <li className="mb-2">

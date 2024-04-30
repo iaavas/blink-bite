@@ -1,0 +1,6 @@
+.ant-table-filter-dropdown-btns .ant-btn-sm {
+  color: black !important;
+}
+.ant-table-filter-dropdown-btns .ant-btn-sm:hover {
+  color: rgb(3, 38, 3) !important;
+}

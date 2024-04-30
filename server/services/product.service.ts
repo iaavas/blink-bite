@@ -1,14 +1,15 @@
 import prisma from "../prisma/prisma-client";
 import HttpException from "../models/http-exception.model";
 import { Product } from "../models/product.model";
+import multer from "multer";
 
 export const addProduct = async (input: Product): Promise<Product> => {
   const name = input.name?.trim();
   const description = input.description?.trim();
-  const price = input.price;
-  const quantity = input.quantity;
-  const discount = input.discount;
-  const image = input.image?.trim();
+  const price = parseFloat(input.price);
+  const quantity = parseInt(input.quantity);
+  const discount = parseInt(input.discount);
+  const image = input.image;
   const unit = input.unit.trim();
   const category = input?.category.trim();
   const keyFeatures = input?.keyFeatures;
@@ -30,7 +31,7 @@ export const addProduct = async (input: Product): Promise<Product> => {
     throw new HttpException(422, { errors: { image: ["can't be blank"] } });
   }
 
-  if (!unit || !keyFeatures) {
+  if (!unit) {
     throw new HttpException(422, {
       errors: { "size or brand or color": ["can't be blank"] },
     });
@@ -45,10 +46,10 @@ export const addProduct = async (input: Product): Promise<Product> => {
       discount,
       description,
       unit,
-      keyFeatures,
       quantity,
     },
   });
+  console.log(product);
 
   return product;
 };
@@ -89,6 +90,7 @@ export const deleteProduct = async (productId: string) => {
     },
     select: {
       id: true,
+      name: true,
     },
   });
 
@@ -121,6 +123,7 @@ export const getAllProducts = async () => {
       id: true,
       discount: true,
       quantity: true,
+      description: true,
 
       unit: true,
     },

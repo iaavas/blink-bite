@@ -66,10 +66,10 @@ const Results: React.FC = () => {
       <Nav />
       {!error ? (
         <>
-          <div className="my-8 font-bold mx-12 text-md font-roboto">
+          <div className="my-8 font-bold mx-12 text-md ">
             Showing results for: &quot;{q}&quot;
           </div>
-          <div className="flex flex-wrap justify-around items-center gap-4 overflow-x-hidden mx-12 mb-8">
+          <div className="grid grid-cols-4 gap-4 px-8 py-2 z-10">
             {results.map((result) => (
               <ProductCard
                 key={result.id}

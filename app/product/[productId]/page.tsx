@@ -110,7 +110,7 @@ function ProductPage() {
           <div className="w-full md:w-1/2">
             <div className="mb-8 relative">
               <Image
-                src={product.image}
+                src={`/${product.image}`}
                 alt={product.name}
                 width={300}
                 height={300}
