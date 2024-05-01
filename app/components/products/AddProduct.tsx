@@ -2,23 +2,10 @@ import { useAuth } from "@/app/context/AuthContext";
 import { URL } from "@/constants/constant";
 import axios from "axios";
 import { useState } from "react";
-import Modal from "react-modal";
-import { toast } from "react-toastify";
 
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    maxWidth: "600px",
-    width: "90%",
-    height: "100vh",
-    zIndex: "100",
-  },
-};
+import { toast } from "react-toastify";
+import { PlusSquareOutlined } from "@ant-design/icons";
+import { Modal } from "antd";
 
 const AddProduct = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -31,7 +18,7 @@ const AddProduct = () => {
     discount: "",
     description: "",
     unit: "",
-    // keyFeatures: "",
+    keyFeatures: "",
     quantity: "",
     image: null,
   });
@@ -50,7 +37,7 @@ const AddProduct = () => {
       console.log(files[0]);
       setProduct((prevData) => ({
         ...prevData,
-        [name]: files[0], // Assuming only one file is uploaded
+        [name]: files[0],
       }));
     } else {
       setProduct((prevData) => ({
@@ -68,6 +55,8 @@ const AddProduct = () => {
       formData.append("price", product.price);
       formData.append("discount", product.discount);
       formData.append("description", product.description);
+      // @ts-ignore
+      formData.append("keyFeatures", product.keyFeatures);
       formData.append("unit", product.unit);
       formData.append("quantity", product.quantity);
       // @ts-ignore
@@ -79,7 +68,6 @@ const AddProduct = () => {
           "Content-Type": "multipart/form-data", // Set content type to multipart/form-data
         },
       });
-      console.log(response.data);
 
       if (response) {
         toast.success("Product Added");
@@ -92,18 +80,19 @@ const AddProduct = () => {
   }
 
   return (
-    <div>
+    <div className="z-40">
       <button
         onClick={openModal}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        className="bg-rose-700 hover:bg-rose-800 text-white font-bold py-2 px-4 rounded"
       >
-        Add Product
+        <PlusSquareOutlined />
       </button>
       <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel="Add Product Modal"
+        open={modalIsOpen}
+        onOk={handleSubmit}
+        onCancel={closeModal}
+        okButtonProps={{ className: "bg-cyan-700 text-white" }}
+        className="overflow-y-auto h-[80vh]"
       >
         <h2 className="text-xl font-bold mb-4">Add Product</h2>
         <form className="w-full max-w-lg">
@@ -120,6 +109,7 @@ const AddProduct = () => {
               name="name"
               value={product.name}
               onChange={handleChange}
+              required
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Product Name"
             />
@@ -134,6 +124,7 @@ const AddProduct = () => {
             <input
               id="category"
               type="text"
+              required
               name="category"
               value={product.category}
               onChange={handleChange}
@@ -153,6 +144,7 @@ const AddProduct = () => {
               type="number"
               step="0.01"
               min="0"
+              required
               name="price"
               value={product.price}
               onChange={handleChange}
@@ -170,6 +162,7 @@ const AddProduct = () => {
             <input
               id="image"
               type="file"
+              required
               accept="image/*"
               name="image"
               onChange={handleChange}
@@ -188,6 +181,7 @@ const AddProduct = () => {
               type="number"
               step="0.01"
               min="0"
+              required
               max="100"
               name="discount"
               value={product.discount}
@@ -222,6 +216,7 @@ const AddProduct = () => {
             <input
               id="unit"
               type="text"
+              required
               name="unit"
               value={product.unit}
               onChange={handleChange}
@@ -240,8 +235,8 @@ const AddProduct = () => {
               id="keyFeatures"
               rows={3}
               name="keyFeatures"
-              // value={product.keyFeatures}
-              // onChange={handleChange}
+              value={product.keyFeatures}
+              onChange={handleChange}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Key Features (each feature on a new line)"
             ></textarea>
@@ -255,6 +250,7 @@ const AddProduct = () => {
             </label>
             <input
               id="quantity"
+              required
               type="number"
               min="1"
               name="quantity"
@@ -263,21 +259,6 @@ const AddProduct = () => {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Product Quantity"
             />
-          </div>
-          <div className="flex justify-end">
-            <button
-              onClick={closeModal}
-              className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded mr-2"
-            >
-              Close
-            </button>
-            <button
-              type="button"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              onClick={handleSubmit}
-            >
-              Save
-            </button>
           </div>
         </form>
       </Modal>

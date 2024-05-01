@@ -1,13 +1,14 @@
 import Link from "next/link";
 import React from "react";
+import { ProductOutlined } from "@ant-design/icons";
 import { FaShirt } from "react-icons/fa6";
 import { FaUser } from "react-icons/fa";
 import { CiShop } from "react-icons/ci";
 
 function Sidebar() {
   return (
-    <div className="bg-gray-800  text-white p-4  font-urban w-52 h-screen flex-none overflow-y-hidden max-h-screen">
-      <h2 className="font-bold mb-4 text-sm md:text-lg">Vastra Admin</h2>
+    <div className="bg-gray-800  text-white p-4   w-60 h-screen flex-none overflow-y-hidden max-h-screen">
+      <h2 className="font-bold mb-4 text-sm md:text-lg">Admin</h2>
       <ul className="flex flex-col gap-4 items-center sm:items-start mt-4">
         <li className="mb-2">
           <Link
@@ -26,7 +27,7 @@ function Sidebar() {
             className="flex items-center hover:text-green-500 mx-auto"
           >
             <span className="mr-2">
-              <FaShirt />
+              <ProductOutlined />
             </span>
             <span className="hidden md:inline">Products</span>
           </Link>

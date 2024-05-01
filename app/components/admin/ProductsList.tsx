@@ -25,6 +25,7 @@ import {
 import type { TableColumnsType } from "antd";
 import { useAuth } from "@/app/context/AuthContext";
 import { Popconfirm } from "antd";
+import AddProduct from "../products/AddProduct";
 
 interface DataType {
   id: React.Key;
@@ -297,10 +298,13 @@ const ProductList: React.FC<ProductListProps> = () => {
   }, []);
 
   return (
-    <div className="p-6 w-full ">
-      <p className="font-bold text-2xl mb-6">
-        Total Products: {products.length}
-      </p>
+    <div className="p-6 w-full z-10 flex flex-col">
+      <div className="flex justify-between items-center">
+        <p className="font-bold text-2xl mb-6">
+          Total Products: {products.length}
+        </p>
+        <AddProduct />
+      </div>
 
       <Table
         columns={columns}

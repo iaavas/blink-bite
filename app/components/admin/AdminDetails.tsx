@@ -6,7 +6,6 @@ import AddProduct from "../products/AddProduct";
 function AdminDetails() {
   return (
     <div className="flex-grow overflow-y-auto max-h-screen">
-      <AddProduct />
       <ProductList />
     </div>
   );

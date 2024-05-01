@@ -15,10 +15,10 @@ const router = Router();
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/"); // Uploads will be stored in the 'uploads/' directory
+    cb(null, "public/uploads/");
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname); // Unique filename
+    cb(null, Date.now() + "-" + file.originalname);
   },
 });
 
@@ -31,11 +31,11 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const productData = req.body;
-      console.log(req.body);
       if (!req.file) return;
       const imageUrl = req.file.path;
 
       productData.image = imageUrl;
+      console.log(productData);
 
       const product = await addProduct(productData);
 

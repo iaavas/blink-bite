@@ -12,7 +12,8 @@ export const addProduct = async (input: Product): Promise<Product> => {
   const image = input.image;
   const unit = input.unit.trim();
   const category = input?.category.trim();
-  const keyFeatures = input?.keyFeatures;
+  const keyFeatures = input?.keyFeatures.split("\r\n");
+  console.log(keyFeatures);
 
   if (!name) {
     throw new HttpException(422, { errors: { name: ["can't be blank"] } });
@@ -46,6 +47,7 @@ export const addProduct = async (input: Product): Promise<Product> => {
       discount,
       description,
       unit,
+      keyFeatures,
       quantity,
     },
   });
