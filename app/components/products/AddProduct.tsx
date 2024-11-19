@@ -83,7 +83,7 @@ const AddProduct = () => {
     <div className="z-40">
       <button
         onClick={openModal}
-        className="bg-rose-700 hover:bg-rose-800 text-white font-bold py-2 px-4 rounded"
+        className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded"
       >
         <PlusSquareOutlined />
       </button>

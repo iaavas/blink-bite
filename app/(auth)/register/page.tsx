@@ -3,29 +3,30 @@ import Footer from "@/app/components/ui/Footer";
 import Loading from "@/app/components/ui/Loading";
 import Nav from "@/app/components/ui/Nav";
 import { useAuth } from "@/app/context/AuthContext";
-import useRedirectOnRole from "@/app/hooks/useRedirectOnRole";
+import usegreenirectOnRole from "@/app/hooks/useRedirectOnRole";
 import { URL } from "@/constants/constant";
-import { handleErrors } from "@/lib/utils";
+
+import Link from "next/link";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Page() {
   const [userName, setUserName] = useState("");
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const { login, addRole } = useAuth();
-
-  useRedirectOnRole();
+  usegreenirectOnRole();
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     try {
       event.preventDefault();
 
-      if (!email || !password || !password || !confirmPassword) {
+      if (!email || !password || !confirmPassword) {
         toast.error("Please fill in all fields and ensure passwords match", {
           position: "top-center",
         });
@@ -48,6 +49,9 @@ function Page() {
         },
       };
 
+
+      
+
       const res = await fetch(`${URL}users`, {
         method: "POST",
         headers: {
@@ -62,73 +66,94 @@ function Page() {
 
         login(data.user.token);
         addRole("USER");
-
-        setIsLoading(false);
       } else {
         const data = await res.json();
-        handleErrors(data.errors);
-
-        setIsLoading(false);
+        toast.error(data.message, { position: "top-center" });
       }
     } catch (error) {
       toast.error("An unexpected error occurred", { position: "top-center" });
-      setIsLoading(false);
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-gray-50">
+        <ToastContainer/>
       <Nav />
 
-      <div className="flex flex-col items-center  justify-center p-6 mt-8 sm:ml-8">
-        <form className="w-full max-w-md" onSubmit={handleSubmit}>
+      <div className="flex flex-col items-center justify-center px-6 py-12 mt-8">
+        <form
+          className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg"
+          onSubmit={handleSubmit}
+        >
+          <h2 className="text-3xl font-semibold text-center text-gray-900 mb-6">Register</h2>
+
           <div className="mb-4">
             <input
               type="text"
               placeholder="Username"
               value={userName}
               onChange={(e) => setUserName(e.target.value)}
-              className="w-full border border-gray-300 p-2 focus:outline-none focus:border-blue-500 rounded-sm font-urban tracking-wider"
+              className="w-full border border-gray-300 p-4 rounded-md focus:outline-none focus:ring-2 focus:ring-green-300 font-medium"
             />
           </div>
+
           <div className="mb-4">
             <input
               type="email"
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full border border-gray-300 p-2 focus:outline-none focus:border-blue-500 rounded-sm font-urban tracking-wider"
+              className="w-full border border-gray-300 p-4 rounded-md focus:outline-none focus:ring-2 focus:ring-green-300 font-medium"
             />
           </div>
+
           <div className="mb-4">
             <input
               type="password"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full border border-gray-300 p-2 focus:outline-none focus:border-blue-500 rounded-sm font-urban tracking-wider"
+              className="w-full border border-gray-300 p-4 rounded-md focus:outline-none focus:ring-2 focus:ring-green-300 font-medium"
             />
           </div>
+
           <div className="mb-6">
             <input
               type="password"
               placeholder="Confirm Password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full border border-gray-300 p-2 focus:outline-none focus:border-blue-500 rounded-sm font-urban tracking-wider"
+              className="w-full border border-gray-300 p-4 rounded-md focus:outline-none focus:ring-2 focus:ring-green-300 font-medium"
             />
           </div>
+
           {!isLoading ? (
             <button
               type="submit"
-              className="w-full bg-blue-200 text-black uppercase font py-2 px-4 rounded-sm font-urabn hover:bg-blue-300 focus:outline-none focus:shadow-outline-indigo font-urban tracking-wider"
+              className="w-full bg-green-500 text-white py-3 rounded-md hover:bg-green-600 focus:outline-none transition duration-300"
             >
               Register
             </button>
           ) : (
-            <Loading />
+            <div className="flex justify-center mt-4">
+              <Loading />
+            </div>
           )}
+
+          <div className="mt-6 text-center">
+            <span className="text-gray-600">
+              Already have an account?{" "}
+              <Link
+                href="/login"
+                className="text-green-500 font-semibold hover:underline"
+              >
+                Login Here.
+              </Link>
+            </span>
+          </div>
         </form>
       </div>
 

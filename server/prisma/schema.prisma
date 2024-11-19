@@ -3,7 +3,7 @@
 
 datasource db {
   provider = "mongodb"
-  url      = env("DATABASE_URL")
+  url      = "mongodb+srv://aavas:bqJeTfeU9WPJhKX4@cluster0.5rvxmxp.mongodb.net/vastra"
 }
 
 generator client {

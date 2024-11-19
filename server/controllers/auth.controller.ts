@@ -6,6 +6,7 @@ import {
   getCurrentUser,
   login,
   updateUser,
+  getAllAdmins,
 } from "../services/auth.service";
 
 import AuthenticatedRequest from "../types/AuthenticatedReq.types";
@@ -78,5 +79,18 @@ router.put(
     }
   }
 );
+
+router.get(
+    "/users",
+    isAdmin,
+    async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+      try {
+        const user = await getAllAdmins();
+        res.json({ user });
+      } catch (error) {
+        next(error);
+      }
+    }
+  );
 
 export default router;

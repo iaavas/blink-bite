@@ -24,7 +24,8 @@ function CartItems() {
             className="flex justify-end items-center gap-2 border-b p-4"
           >
             <Image
-              src={`/${ci.image}`}
+            src={`/uploads/${ci.image.split('\\')[2]}`}
+              
               width={50}
               height={50}
               alt={ci.name}

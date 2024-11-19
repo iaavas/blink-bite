@@ -93,6 +93,8 @@ function ProductPage() {
     quantity: curquantity ?? 1,
   };
 
+  console.log(product.image)
+
   const handleAddClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     dispatch({
@@ -110,7 +112,8 @@ function ProductPage() {
           <div className="w-full md:w-1/2">
             <div className="mb-8 relative">
               <Image
-                src={`/${product.image}`}
+                src={`/uploads/${product.image.split('\\')[2]}`}
+
                 alt={product.name}
                 width={300}
                 height={300}

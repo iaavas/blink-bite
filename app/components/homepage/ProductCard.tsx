@@ -91,17 +91,17 @@ function ProductCard({
 
   return (
     <div
-      className="shadow-sm border-[0.5px] rounded-sm border-gray-200   bg-white p-4 relative w-60 h-64 aspect-square cursor-pointer z-20"
+      className="shadow-sm border-[0.5px] rounded-sm border-gray-200   bg-white p-4 relative  aspect-square cursor-pointer z-20"
       onClick={handleClick}
     >
       <div className="relative">
         <Image
-          src={`/${image}`}
+          src={`/uploads/${product.image.split('\\')[2]}`}
           alt={"product"}
-          width={100}
-          height={100}
+          width={200}
+          height={200}
           quality={80}
-          className={`aspect-square w-20 h-20 mx-auto ${
+          className={`aspect-square  mx-auto ${
             isInCart && "grayscale"
           }`}
         />
@@ -111,21 +111,18 @@ function ProductCard({
           </span>
         )}
       </div>
-      <p className="text-gray-500 font-semibold text-md  p-2 text-center">
-        {unit}
-      </p>
-      <div className="p-2">
-        <p className="text-gray-800 font-semibold text-sm mb-6 ">{name}</p>
 
-        <div className="absolute bottom-0 left-0 right-0 mx-auto flex items-center justify-between py-2 px-4 mt-8">
-          <div className="flex items-center mt-4">
-            <TbCurrencyRupeeNepalese className="h-5 w-5 text-black" />
-            <div>
-              <span className="font-semibold text-black ml-1 text-sm">
-                {price}
-              </span>
-            </div>
+
+        <div className="p-4 space-y-2">
+        <p className="text-gray-500 text-sm uppercase font-medium">{unit}</p>
+        <h3 className="text-gray-800 text-lg font-semibold truncate">{name}</h3>
+        <p className="text-gray-600 text-sm line-clamp-2">{description}</p>
+        <div className="flex items-center justify-between mt-4">
+          <div className="flex items-center text-lg font-semibold text-green-700">
+            <TbCurrencyRupeeNepalese className="w-5 h-5" />
+            <span>{price}</span>
           </div>
+          
           <div>
             {!isInCart ? (
               <button

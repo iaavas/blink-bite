@@ -48,6 +48,7 @@ function ProductCarousel({ limit = null }) {
 
   // Group products by category
   const groupedProducts = {};
+  if(!products) return <Loading size={40} />
   products.forEach((product) => {
     // @ts-ignore
     if (!groupedProducts[product.category]) {

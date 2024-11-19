@@ -11,7 +11,7 @@ function CatProducts({ category }: { category: string }) {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch(`${URL}c/products?cat=${category}`);
+        const response = await fetch(`${"http://localhost:3200/api/"}c/products?cat=${category}`);
         const data = await response.json();
 
         setIsLoading(false);
@@ -34,7 +34,7 @@ function CatProducts({ category }: { category: string }) {
     );
 
   return (
-    <div className="flex flex-wrap gap-8  p-8  ">
+    <div className="grid sm:grid-cols-3 grid-cols-1  gap-8    ">
       {categories.length > 0 &&
         categories.map((c: any) => (
           <ProductCard

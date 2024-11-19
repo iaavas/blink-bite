@@ -44,23 +44,21 @@ function Nav() {
         </span>
         <Search />
 
-        {/* <div className="hidden md:flex items-center gap-4 font-roboto text-lg tracking uppercase ">
-          {!token && <Link href="/register">Register</Link>}
-          {role === "ADMIN" && <Link href="/register">Register</Link>}
-          {!token ? (
-            <Link href="/login">Sign In</Link>
-          ) : (
+        <div className="hidden md:flex items-center gap-12 font-roboto text-lg tracking uppercase ">
+          {!token && <Link href="/register" className="px-4">Register</Link>}
+          
+          {token && (
             <button
               onClick={() => {
                 logout();
                 toast.warn("Logged Out!", { position: "bottom-right" });
               }}
-              className="border-2 font-urban uppercase p-2 border-black mr-6"
+              className="border-2 font-urban uppercase p-2 border-black "
             >
               Logout
             </button>
           )}
-        </div> */}
+        </div>
         <Sheet>
           <SheetTrigger className="flex items-center  w-2/6  bg-green-700 rounded-lg justify-center gap-3 text-white font-bold py-3">
             <MdOutlineShoppingCart size={25} />

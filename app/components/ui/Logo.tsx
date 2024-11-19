@@ -10,7 +10,7 @@ function Logo() {
       className="text-xl   tracking-wider	font-semibold  text-center italic   gap-4 items-center hidden sm:flex sm:flex-row-reverse "
     >
       BlinkBite
-      <span className="text-red-500">
+      <span className="text-green-800">
         <FaTruckFast size={40} />
       </span>
     </Link>

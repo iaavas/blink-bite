@@ -143,6 +143,24 @@ export const getCurrentUser = async (username: string) => {
 
 export const getAllUsers = async () => {
   const user = await prisma.user.findUnique({
+
+    select: {
+      username: true,
+      email: true,
+    },
+  });
+
+  return {
+    ...user,
+    token: generateToken(user),
+  };
+};
+
+export const getAllAdmins = async () => {
+  const user = await prisma.user.findUnique({
+    where: {
+      role: "ADMIN",
+    },
     select: {
       username: true,
       email: true,

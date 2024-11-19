@@ -9,6 +9,7 @@ import { CartProvider } from "./context/CartContext";
 import { FilterProvider } from "./context/FilterContext";
 import { SearchProvider } from "./context/ProductsContext";
 
+
 const inter = Montserrat({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -24,11 +25,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className}`}>
-        <ToastContainer />
+        
         <FilterProvider>
           <SearchProvider>
             <AuthProvider>
-              <CartProvider>{children}</CartProvider>
+              <CartProvider>
+              <ToastContainer />{children}</CartProvider>
             </AuthProvider>
           </SearchProvider>
         </FilterProvider>

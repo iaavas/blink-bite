@@ -299,8 +299,8 @@ const ProductList: React.FC<ProductListProps> = () => {
 
   return (
     <div className="p-6 w-full z-10 flex flex-col">
-      <div className="flex justify-between items-center">
-        <p className="font-bold text-2xl mb-6">
+      <div className="flex justify-between items-center gap-y-16 p-4">
+        <p className="font-bold text-2xl ">
           Total Products: {products.length}
         </p>
         <AddProduct />
